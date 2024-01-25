@@ -520,14 +520,14 @@ static void MX_TIM4_Init(void);
 			  GPIO_InitStructPrivate.Mode = GPIO_MODE_OUTPUT_PP;
 			  GPIO_InitStructPrivate.Speed = GPIO_SPEED_FREQ_LOW;
 			  GPIO_InitStructPrivate.Pull = GPIO_NOPULL;
-			  HAL_GPIO_Init(DHT11_PORT, &GPIO_InitStructPrivate); // set the pin as output
-			  HAL_GPIO_WritePin (DHT11_PORT, DHT11_PIN, 0);   // pull the pin low
-			  HAL_Delay(20);   // wait for 20ms
-			  HAL_GPIO_WritePin (DHT11_PORT, DHT11_PIN, 1);   // pull the pin high
-			  microDelay (30);   // wait for 30us
+			  HAL_GPIO_Init(DHT11_PORT, &GPIO_InitStructPrivate); 
+			  HAL_GPIO_WritePin (DHT11_PORT, DHT11_PIN, 0);   
+			  HAL_Delay(20);  
+			  HAL_GPIO_WritePin (DHT11_PORT, DHT11_PIN, 1);  
+			  microDelay (30);   
 			  GPIO_InitStructPrivate.Mode = GPIO_MODE_INPUT;
 			  GPIO_InitStructPrivate.Pull = GPIO_PULLUP;
-			  HAL_GPIO_Init(DHT11_PORT, &GPIO_InitStructPrivate); // set the pin as input
+			  HAL_GPIO_Init(DHT11_PORT, &GPIO_InitStructPrivate); 
 			  microDelay (40);
 			  if (!(HAL_GPIO_ReadPin (DHT11_PORT, DHT11_PIN)))
 			  {
@@ -551,18 +551,18 @@ static void MX_TIM4_Init(void);
 				pMillis = HAL_GetTick();
 				cMillis = HAL_GetTick();
 				while (!(HAL_GPIO_ReadPin (DHT11_PORT, DHT11_PIN)) && pMillis + 2 > cMillis)
-				{  // wait for the pin to go high
+				{  
 				  cMillis = HAL_GetTick();
 				}
-				microDelay (40);   // wait for 40 us
-				if (!(HAL_GPIO_ReadPin (DHT11_PORT, DHT11_PIN)))   // if the pin is low
+				microDelay (40);   
+				if (!(HAL_GPIO_ReadPin (DHT11_PORT, DHT11_PIN)))   
 				  b&= ~(1<<(7-a));
 				else
 				  b|= (1<<(7-a));
 				pMillis = HAL_GetTick();
 				cMillis = HAL_GetTick();
 				while ((HAL_GPIO_ReadPin (DHT11_PORT, DHT11_PIN)) && pMillis + 2 > cMillis)
-				{  // wait for the pin to go low
+				{  
 				  cMillis = HAL_GetTick();
 				}
 			  }
@@ -643,20 +643,16 @@ int main(void)
 
 	  if(DHT11_Start())
 	  				  {
-	  					RHI = DHT11_Read(); // Relative humidity integral
-	  					RHD = DHT11_Read(); // Relative humidity decimal
-	  					TCI = DHT11_Read(); // Celsius integral
-	  					TCD = DHT11_Read(); // Celsius decimal
-	  					SUM = DHT11_Read(); // Check sum
+	  					RHI = DHT11_Read(); 
+	  					RHD = DHT11_Read(); 
+	  					TCI = DHT11_Read(); 
+	  					TCD = DHT11_Read(); 
+	  					SUM = DHT11_Read(); 
 	  					if (RHI + RHD + TCI + TCD == SUM)
 	  					{
-	  					  // Can use RHI and TCI for any purposes if whole number only needed
 	  					  tCelsius = (float)TCI + (float)(TCD/10.0);
 	  					  tFahrenheit = tCelsius * 9/5 + 32;
 	  					  RH = (float)RHI + (float)(RHD/10.0);
-	  					  // Can use tCelsius, tFahrenheit and RH for any purposes
-	  					  TFI = tFahrenheit;  // Fahrenheit integral
-	  					  TFD = tFahrenheit*10-TFI*10; // Fahrenheit decimal
 	  					}
 	  				  }
 
